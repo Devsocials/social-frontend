@@ -1,0 +1,8 @@
+.success-toast {
+    background-color: green;
+    overflow: hidden;
+}
+
+.success-toast #toast-msg {
+    background-color: rgb(118, 240, 118);
+}
