@@ -1,36 +1,30 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { lastValueFrom, Observable, from } from 'rxjs';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { lastValueFrom, Observable, from } from "rxjs";
+import { CookieManagerService } from "../cookie-manager.service";
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: "root",
 })
 export class HttpInterceptorService implements HttpInterceptor {
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    return from(this.handleAccess(request, next));
-  }
-  private async handleAccess(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Promise<HttpEvent<any>> {
-    const openEndpoints = [];
-    const accessToken = '';
-    request = request.clone({
-      setParams: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-      setHeaders: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    });
-    return await lastValueFrom(next.handle(request));
-  }
+    constructor(private cookie: CookieManagerService) {}
+
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return from(this.handleAccess(request, next));
+    }
+    private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
+        const openEndpoints = ["http://localhost:9001/user/fds/token"];
+        const accessToken = this.cookie.getCookie("auth");
+        if (!openEndpoints.some((url) => request.urlWithParams.includes(url))) {
+            request = request.clone({
+                setParams: {
+                    Authorization: "Bearer " + accessToken,
+                },
+                setHeaders: {
+                    Authorization: "Bearer " + accessToken,
+                },
+            });
+        }
+        return await lastValueFrom(next.handle(request));
+    }
 }

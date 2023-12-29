@@ -1,0 +1,56 @@
+<section class="mt-12 flex flex-col gap-2">
+    <div class="flex items-center gap-4">
+        <div class="rounded-full overflow-hidden w-10 h-10">
+            <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+        </div>
+        <div>
+            <p routerLink="/{{ postDetails.user.userName }}">{{ postDetails.user.firstName }} {{ postDetails.user.lastName }}</p>
+        </div>
+    </div>
+    <div>
+        <img class="w-full" src="{{ postDetails.postUrl }}" />
+    </div>
+    <div class="flex items-center gap-4">
+        <div class="flex flex-col w-fit h-fit items-center">
+            <span class="cursor-pointer">
+                <ng-icon *ngIf="!isLiked" size="22" name="faHeart"></ng-icon>
+                <ng-icon *ngIf="isLiked" size="22" [color]="'red'" name="faSolidHeart"></ng-icon>
+            </span>
+            <span class="-mt-2">
+                <p>{{ postDetails.noOfLikes }}</p>
+            </span>
+        </div>
+        <div class="flex flex-col w-fit h-fit items-center">
+            <span (click)="getComments()" class="cursor-pointer">
+                <ng-icon size="22" name="faComment"></ng-icon>
+            </span>
+            <span class="-mt-2">
+                <p>{{ postDetails.noOfComments }}</p>
+            </span>
+        </div>
+    </div>
+    <div *ngIf="!commentsHidden" class="mt-2 ml-8">
+        <div *ngIf="comments$ | async as comments">
+            <div *ngFor="let comment of comments" class="flex items-center gap-2 mb-6">
+                <div class="rounded-full overflow-hidden w-10 h-10">
+                    <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+                </div>
+                <div class="text-sm">
+                    <p class="font-medium">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
+                    <p>{{ comment.comment }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8">
+            <form #commentForm="ngForm" (ngSubmit)="addComment(commentForm)">
+                <input
+                    class="bg-transparent border-b-2 focus:outline-none border-gray-300"
+                    name="comment"
+                    ngModel
+                    placeholder="Add a comment"
+                />
+                <button class="ml-3" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+</section>

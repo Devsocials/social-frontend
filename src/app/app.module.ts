@@ -16,9 +16,25 @@ import { HttpInterceptorService } from "./services/interceptor/http-interceptor.
 import { ToastComponent } from "./components/toast/toast.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ProfileComponent } from "./components/profile/profile.component";
+import { UserPostComponent } from "./templates/user-pot/user-post/user-post.component";
+import { PagewrapperComponent } from "./templates/wrappers/pagewrapper/pagewrapper.component";
+import { NgIconsModule } from "@ng-icons/core";
+import { faHeart, faComment } from "@ng-icons/font-awesome/regular";
+import { faSolidHeart } from "@ng-icons/font-awesome/solid";
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, NavbarComponent, TimelineComponent, TestComponent, ToastComponent],
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        NavbarComponent,
+        TimelineComponent,
+        TestComponent,
+        ToastComponent,
+        ProfileComponent,
+        UserPostComponent,
+        PagewrapperComponent,
+    ],
     imports: [
         BrowserModule,
         RouterModule.forRoot(AppRoutes),
@@ -28,6 +44,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
+        NgIconsModule.withIcons({ faHeart, faSolidHeart, faComment }),
     ],
     providers: [
         {

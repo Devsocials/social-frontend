@@ -1,9 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import { Auth } from "../../common/auth";
 import { User } from "../../common/user";
-import { login } from "../../store/actions/auth.action";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
 
@@ -15,10 +11,7 @@ import { AuthService } from "../../services/auth.service";
 export class LoginComponent implements OnInit {
     signUpFormGroup!: FormGroup;
 
-    auth$: Observable<Auth>;
-    constructor(private store: Store<{ auth: Auth }>, private authService: AuthService) {
-        this.auth$ = store.select("auth");
-    }
+    constructor(private authService: AuthService) {}
     ngOnInit(): void {
         this.signUpFormGroup = new FormGroup({
             username: new FormControl("", Validators.required),
@@ -28,7 +21,7 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    signUp: boolean = true;
+    signUp: boolean = false;
 
     stateStyleTrue: string =
         "w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2 border-blue-500 dark:border-blue-400 dark:text-white";
@@ -41,16 +34,9 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        const auth = new Auth();
-        auth.isUserAuthenticated = true;
         const user = new User();
-        user.name = "Madhur Sharma";
-        auth.user = user;
-        this.store.dispatch(login({ payload: { loginData: auth } }));
-    }
-
-    submit() {
-      
-        console.log(this.signUpFormGroup.controls["email"].value);
+        user.email = this.signUpFormGroup.controls["email"].value;
+        const password = this.signUpFormGroup.controls["password"].value;
+        this.authService.login(user, password);
     }
 }

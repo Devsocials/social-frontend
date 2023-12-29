@@ -1,3 +1,7 @@
 export class User {
-  name!: string;
+  id!: number;
+  firstName!: string;
+  lastName!: string;
+  email!: string;
+  userName!: string;
 }
