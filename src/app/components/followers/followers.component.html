@@ -1,1 +1,8 @@
-<p>followers works!</p>
+<pagewrapper>
+    <!-- <div>Followers</div> -->
+    <div *ngIf="followers$ | async as followers">
+        <div *ngFor="let follower of followers">
+            <p>{{ follower.user.userName }}</p>
+        </div>
+    </div>
+</pagewrapper>
