@@ -16,7 +16,6 @@ export class UserPostComponent implements OnInit {
     @Input() postDetails!: Post;
     comments$: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>([]);
     commentsHidden: boolean = true;
-    isLiked: boolean = false;
 
     constructor(private postService: PostService) {}
 
@@ -44,6 +43,20 @@ export class UserPostComponent implements OnInit {
                 this.comments$.next(newComments);
                 this.postDetails.noOfComments++;
                 commentForm.resetForm();
+            },
+        });
+    }
+
+    likePost() {
+        const action: string = this.postDetails.likedByUser ? "UNLIKE" : "LIKE";
+        this.postService.likePost(this.user, this.postDetails.id, action).subscribe({
+            next: () => {
+                if (action === "LIKE") {
+                    this.postDetails.noOfLikes++;
+                } else {
+                    this.postDetails.noOfLikes--;
+                }
+                this.postDetails.likedByUser = !this.postDetails.likedByUser;
             },
         });
     }

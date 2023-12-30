@@ -6,4 +6,5 @@ export class Post {
     user!: User;
     noOfLikes!: number;
     noOfComments!: number;
+    likedByUser!: boolean;
 }

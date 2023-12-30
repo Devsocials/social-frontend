@@ -12,9 +12,9 @@
     </div>
     <div class="flex items-center gap-4">
         <div class="flex flex-col w-fit h-fit items-center">
-            <span class="cursor-pointer">
-                <ng-icon *ngIf="!isLiked" size="22" name="faHeart"></ng-icon>
-                <ng-icon *ngIf="isLiked" size="22" [color]="'red'" name="faSolidHeart"></ng-icon>
+            <span (click)="likePost()" class="cursor-pointer">
+                <ng-icon *ngIf="!postDetails.likedByUser" size="22" name="faHeart"></ng-icon>
+                <ng-icon *ngIf="postDetails.likedByUser" size="22" [color]="'red'" name="faSolidHeart"></ng-icon>
             </span>
             <span class="-mt-2">
                 <p>{{ postDetails.noOfLikes }}</p>

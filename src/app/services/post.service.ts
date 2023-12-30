@@ -23,4 +23,8 @@ export class PostService {
     addComment(user: User, postId: number, comment: Comment): Observable<any> {
         return this.http.post<any>(Constants.baseUrl + `/user/${user.id}/post/${postId}/comment`, comment);
     }
+
+    likePost(user: User, postId: number, action: string): Observable<any> {
+        return this.http.post<any>(Constants.baseUrl + `/user/${user.id}/post/${postId}/like`, { action: action });
+    }
 }
