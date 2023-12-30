@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { LoginComponent } from "./components/login/login.component";
 import { TestComponent } from "./components/test/test.component";
 import { ProfileComponent } from "./components/profile/profile.component";
+import { LoginguardService } from "./services/route-guards/loginguard.service";
 
 export const AppRoutes: Routes = [
     {
@@ -10,5 +11,5 @@ export const AppRoutes: Routes = [
     },
     { path: "login", component: LoginComponent },
     { path: "test", component: TestComponent },
-    { path: ":username", component: ProfileComponent },
+    { path: ":username", component: ProfileComponent, canActivate: [LoginguardService] },
 ];

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Auth } from "../common/auth";
 import { Store } from "@ngrx/store";
 import { HttpClient } from "@angular/common/http";
@@ -14,7 +14,7 @@ import { Router } from "@angular/router";
 })
 export class AuthService {
     auth$: Observable<Auth>;
-    loggedInUser: Subject<User> = new BehaviorSubject<User>(new User());
+    loggedInUser: BehaviorSubject<User> = new BehaviorSubject<User>(new User());
     constructor(
         private store: Store<{ auth: Auth }>,
         private http: HttpClient,
@@ -48,5 +48,9 @@ export class AuthService {
                     this.store.dispatch(login({ payload: { loginData: new Auth() } }));
                 },
             });
+    }
+
+    validateLogin(): Observable<User> {
+        return this.http.get<User>(Constants.baseUrl + `/user/fds/get-loggedin-user`);
     }
 }

@@ -22,6 +22,7 @@ import { PagewrapperComponent } from "./templates/wrappers/pagewrapper/pagewrapp
 import { NgIconsModule } from "@ng-icons/core";
 import { faHeart, faComment } from "@ng-icons/font-awesome/regular";
 import { faSolidHeart } from "@ng-icons/font-awesome/solid";
+import { FollowersComponent } from './components/followers/followers.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { faSolidHeart } from "@ng-icons/font-awesome/solid";
         ProfileComponent,
         UserPostComponent,
         PagewrapperComponent,
+        FollowersComponent,
     ],
     imports: [
         BrowserModule,
