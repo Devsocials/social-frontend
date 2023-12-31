@@ -4,30 +4,47 @@
             <a rel="noopener noreferrer" href="#" aria-label="Back to homepage" class="flex items-center p-2">
                 <img class="w-auto h-auto sm:h-7" src="../../../assets/landscape logo.png" alt="" />
             </a>
-            <ul class="items-stretch hidden space-x-3 lg:flex">
-                <li class="flex">
-                    <a rel="noopener noreferrer" routerLink="/login" class="flex items-center px-4 -mb-1 dark:border-transparent">Login</a>
-                </li>
+            <ul *ngIf="isUserLoggedIn" class="items-stretch hidden space-x-3 lg:flex">
                 <li class="flex">
                     <a
+                        routerLink="/timeline"
                         rel="noopener noreferrer"
                         href="#"
-                        class="flex items-center px-4 -mb-1 dark:border-transparent dark:text-violet-400 dark:border-violet-400"
-                        >Home</a
+                        class="flex items-center px-4 -mb-1 dark:border-transparent"
+                        >Timeline</a
                     >
                 </li>
                 <li class="flex">
-                    <a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 dark:border-transparent">My Profile</a>
+                    <a
+                        routerLink="/profile/{{ loggedInUser?.userName }}"
+                        rel="noopener noreferrer"
+                        href="#"
+                        class="flex items-center px-4 -mb-1 dark:border-transparent"
+                        >My Profile</a
+                    >
                 </li>
                 <li class="flex">
-                    <a routerLink="/timeline" rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 dark:border-transparent"
-                        >Timeline</a
+                    <a
+                        routerLink="/profile/{{ loggedInUser?.userName }}/followers"
+                        rel="noopener noreferrer"
+                        href="#"
+                        class="flex items-center px-4 -mb-1 dark:border-transparent"
+                        >Followers</a
+                    >
+                </li>
+                <li class="flex">
+                    <a
+                        routerLink="/profile/{{ loggedInUser?.userName }}/following"
+                        rel="noopener noreferrer"
+                        href="#"
+                        class="flex items-center px-4 -mb-1 dark:border-transparent"
+                        >Following</a
                     >
                 </li>
             </ul>
         </div>
-        <div class="items-center flex-shrink-0 hidden lg:flex">
-            <button class="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Log in</button>
+        <div *ngIf="!isUserLoggedIn" class="items-center flex-shrink-0 hidden lg:flex">
+            <button routerLink="/login" class="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Log in</button>
         </div>
         <button class="p-4 lg:hidden">
             <svg

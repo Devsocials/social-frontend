@@ -26,6 +26,7 @@ export class UserPostComponent implements OnInit {
         if (!this.commentsHidden) {
             this.postService.getCommentsByPostId(this.user, this.postDetails.id).subscribe({
                 next: (data) => {
+                    this.postDetails.noOfComments = data.length;
                     this.comments$.next(data);
                 },
             });

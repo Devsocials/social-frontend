@@ -7,7 +7,7 @@
                     <display-picture></display-picture>
                     <span>{{ follower.user.firstName }}</span>
                 </div>
-                <follow-button></follow-button>
+                <follow-button [followingData]="follower" [loggedInUser]="user"></follow-button>
             </div>
         </div>
     </div>

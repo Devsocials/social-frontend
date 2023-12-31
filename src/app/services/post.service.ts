@@ -16,6 +16,10 @@ export class PostService {
         return this.http.get<Post[]>(Constants.baseUrl + `/user/${user.id}/post/all/${username}`);
     }
 
+    getTimeLinePosts(user: User): Observable<Post[]> {
+        return this.http.get<Post[]>(Constants.baseUrl + `/user/${user.id}/timeline/`);
+    }
+
     getCommentsByPostId(user: User, postId: number): Observable<Comment[]> {
         return this.http.get<Comment[]>(Constants.baseUrl + `/user/${user.id}/post/${postId}/allcomments`);
     }

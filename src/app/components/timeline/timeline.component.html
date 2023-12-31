@@ -1,2 +1,7 @@
-<p>timeline works!</p>
-<h1>{{count$ | async}}</h1>
+<pagewrapper>
+    <section>
+        <div *ngIf="posts$ | async as posts">
+            <app-user-post *ngFor="let post of posts" [postDetails]="post" [user]="user"></app-user-post>
+        </div>
+    </section>
+</pagewrapper>

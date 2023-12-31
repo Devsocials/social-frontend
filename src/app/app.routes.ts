@@ -4,14 +4,19 @@ import { TestComponent } from "./components/test/test.component";
 import { ProfileComponent } from "./components/profile/profile.component";
 import { LoginguardService } from "./services/route-guards/loginguard.service";
 import { FollowersComponent } from "./components/followers/followers.component";
+import { FollowingComponent } from "./components/following/following.component";
 
 export const AppRoutes: Routes = [
     {
         path: "timeline",
         loadChildren: () => import("./modules/timeline/timeline.module").then((m) => m.TimelineModule),
+        canActivate: [LoginguardService],
     },
     { path: "login", component: LoginComponent },
     { path: "test", component: TestComponent },
-    { path: ":username", component: ProfileComponent, canActivate: [LoginguardService] },
-    { path: ":username/followers", component: FollowersComponent, canActivate: [LoginguardService] },
+    { path: "profile/:username", component: ProfileComponent, canActivate: [LoginguardService] },
+    { path: "profile/:username/followers", component: FollowersComponent, canActivate: [LoginguardService] },
+    { path: "profile/:username/following", component: FollowingComponent, canActivate: [LoginguardService] },
+    { path: "**", redirectTo: "/timeline", pathMatch: "full" },
+    { path: "", redirectTo: "/timeline", pathMatch: "full" },
 ];

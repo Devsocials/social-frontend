@@ -1,0 +1,9 @@
+.following {
+    background: rgb(30, 30, 30);
+    color: rgb(216, 216, 216);
+}
+
+.not-following {
+    background: rgb(143, 143, 143);
+    color: rgb(216, 216, 216);
+}
