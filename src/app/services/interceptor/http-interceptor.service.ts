@@ -13,7 +13,7 @@ export class HttpInterceptorService implements HttpInterceptor {
         return from(this.handleAccess(request, next));
     }
     private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
-        const openEndpoints = ["http://localhost:9001/user/fds/token"];
+        const openEndpoints = ["http://localhost:9001/user/0/token"];
         const accessToken = this.cookie.getCookie("auth");
         if (!openEndpoints.some((url) => request.urlWithParams.includes(url))) {
             request = request.clone({

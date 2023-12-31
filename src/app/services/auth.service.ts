@@ -30,7 +30,7 @@ export class AuthService {
             password: password,
         };
         this.http
-            .post(Constants.baseUrl + "/user/fds/token", cred, {
+            .post(Constants.baseUrl + "/user/0/token", cred, {
                 observe: "response",
             })
             .subscribe({
@@ -51,6 +51,6 @@ export class AuthService {
     }
 
     validateLogin(): Observable<User> {
-        return this.http.get<User>(Constants.baseUrl + `/user/fds/get-loggedin-user`);
+        return this.http.get<User>(Constants.baseUrl + `/user/0/get-loggedin-user`);
     }
 }
