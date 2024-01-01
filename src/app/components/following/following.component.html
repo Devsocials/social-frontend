@@ -1,14 +1,6 @@
 <pagewrapper>
     <!-- <div>Following</div> -->
     <div *ngIf="followers$ | async as followers" class="flex flex-col items-center justify-center mx-auto gap-4">
-        <div *ngFor="let follower of followers">
-            <div class="flex items-center justify-between gap-3 w-72 bg-gray-200 p-5">
-                <div class="flex items-center gap-3">
-                    <display-picture></display-picture>
-                    <span>{{ follower.user.firstName }}</span>
-                </div>
-                <follow-button [followingData]="follower" [loggedInUser]="user"></follow-button>
-            </div>
-        </div>
+        <user-follow *ngFor="let searchedUser of followers" [loggedInUser]="user" [searchedUser]="searchedUser"></user-follow>
     </div>
 </pagewrapper>

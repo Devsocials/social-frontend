@@ -23,7 +23,15 @@ export class UserService {
         return this.http.get<Following[]>(Constants.baseUrl + `/user/${user.id}/followers/${userName}`);
     }
 
-    getFollowingByUserName(user: User, userName: any): Observable<Following[]> { 
+    getFollowingByUserName(user: User, userName: any): Observable<Following[]> {
         return this.http.get<Following[]>(Constants.baseUrl + `/user/${user.id}/following/${userName}`);
+    }
+
+    searchUsersByName(user: User, name: string): Observable<Following[]> {
+        return this.http.get<Following[]>(Constants.baseUrl + `/user/${user.id}/find/${name}`);
+    }
+
+    getUserByUserName(user: User, userName: any): Observable<User> {
+        return this.http.get<User>(Constants.baseUrl + `/user/${user.id}/get-user/${userName}`);
     }
 }

@@ -1,3 +1,9 @@
-<div>
-    <button (click)="followUser()" class="px-4 py-1 rounded-lg" [ngClass]="followingData.userFollowedByLoggedInUser ? 'not-following' : 'following'">{{ followingData.userFollowedByLoggedInUser ? 'following' : 'Follow' }}</button>
+<div *ngIf="loggedInUser.id !== followingData.user.id">
+    <button
+        (click)="followUser()"
+        class="px-4 py-1 rounded-lg"
+        [ngClass]="followingData.userFollowedByLoggedInUser ? 'not-following' : 'following'"
+    >
+        {{ followingData.userFollowedByLoggedInUser ? "following" : "Follow" }}
+    </button>
 </div>

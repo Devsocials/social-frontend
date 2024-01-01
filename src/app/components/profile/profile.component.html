@@ -1,7 +1,43 @@
 <pagewrapper>
-    <section>
+    <section *ngIf="viewingProfileOf" class="w-full">
+        <div class="flex items-center gap-20">
+            <div class="flex flex-col">
+                <div class="rounded-full overflow-hidden w-24 h-24">
+                    <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+                </div>
+                <div>
+                    <h1 class="text-xl font-semibold">{{ viewingProfileOf.firstName }} {{ viewingProfileOf.lastName }}</h1>
+                    <span class="font-semibold">&#64;{{ viewingProfileOf.userName }}</span>
+                </div>
+            </div>
+            <div>
+                <div class="flex items-center gap-8 font-medium">
+                    <div class="flex flex-col items-center">
+                        <span class="text-2xl">{{ viewingProfileOf.noOfPosts }}</span>
+                        <span>Posts</span>
+                    </div>
+                    <div routerLink="/profile/{{ viewingProfileOf.userName }}/followers" class="flex flex-col items-center cursor-pointer">
+                        <span class="text-2xl">{{ viewingProfileOf.noOfFollowers }}</span>
+                        <span>Followers</span>
+                    </div>
+                    <div routerLink="/profile/{{ viewingProfileOf.userName }}/following" class="flex flex-col items-center cursor-pointer">
+                        <span class="text-2xl">{{ viewingProfileOf.noOfFollowing }}</span>
+                        <span>Following</span>
+                    </div>
+                </div>
+                <div *ngIf="loggedInUser.id !== viewingProfileOf.id" class="mt-4">
+                    <button
+                        (click)="followUser()"
+                        class="px-4 py-1 rounded-lg w-full"
+                        [ngClass]="viewingProfileOf.userFollowedByLoggedInUser ? 'not-following' : 'following'"
+                    >
+                        {{ viewingProfileOf.userFollowedByLoggedInUser ? "following" : "Follow" }}
+                    </button>
+                </div>
+            </div>
+        </div>
         <div *ngIf="posts$ | async as posts">
-            <app-user-post *ngFor="let post of posts" [postDetails]="post" [user]="user"></app-user-post>
+            <app-user-post *ngFor="let post of posts" [postDetails]="post" [user]="loggedInUser"></app-user-post>
         </div>
     </section>
 </pagewrapper>

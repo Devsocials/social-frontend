@@ -46,6 +46,19 @@
         <div *ngIf="!isUserLoggedIn" class="items-center flex-shrink-0 hidden lg:flex">
             <button routerLink="/login" class="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Log in</button>
         </div>
+        <div *ngIf="isUserLoggedIn" class="flex items-center flex-shrink-0 relative">
+            <input #search (input)="onSearch(search.value)" class="pl-4 pr-2 py-2 w-72 h-[60%] border border-gray-800 rounded-lg" />
+            <div *ngIf="searchedUserList$ | async as searchedUserList" class="absolute top-[55px] bg-gray-100 w-full flex flex-col gap-1">
+                <!-- <div routerLink="/profile/{{ searchedUser.userName }}" *ngFor="let searchedUser of searchedUserList" class="bg-gray-200 py-3 px-2">
+                    {{ searchedUser.firstName }} {{ searchedUser.lastName }}
+                </div> -->
+                <user-follow
+                    *ngFor="let searchedUser of searchedUserList"
+                    [loggedInUser]="loggedInUser"
+                    [searchedUser]="searchedUser"
+                ></user-follow>
+            </div>
+        </div>
         <button class="p-4 lg:hidden">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
