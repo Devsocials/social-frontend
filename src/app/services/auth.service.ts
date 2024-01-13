@@ -53,4 +53,30 @@ export class AuthService {
     validateLogin(): Observable<User> {
         return this.http.get<User>(Constants.baseUrl + `/user/0/get-loggedin-user`);
     }
+
+    signup(user: User, password: string): void {
+        const cred: any = {
+            email: user.email,
+            password: password,
+        };
+        this.http
+            .post(Constants.baseUrl + "/user/0/token", cred, {
+                observe: "response",
+            })
+            .subscribe({
+                next: (data: any) => {
+                    const auth = new Auth();
+                    auth.isUserAuthenticated = true;
+                    auth.user = data.body.user;
+                    this.store.dispatch(login({ payload: { loginData: auth } }));
+                    if (data.body?.token) {
+                        this.cookie.setCookie("auth", data?.body.token, 7);
+                    }
+                    this.router.navigate([`/${auth.user.userName}`]);
+                },
+                error: () => {
+                    this.store.dispatch(login({ payload: { loginData: new Auth() } }));
+                },
+            });
+    }
 }

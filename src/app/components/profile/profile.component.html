@@ -29,9 +29,13 @@
                     <button
                         (click)="followUser()"
                         class="px-4 py-1 rounded-lg w-full"
-                        [ngClass]="viewingProfileOf.userFollowedByLoggedInUser ? 'not-following' : 'following'"
+                        [ngClass]="viewingProfileOf.isUserFollowedByLoggedInUser === 'NOT_FOLLOWING' ? 'following' : 'not-following'"
                     >
-                        {{ viewingProfileOf.userFollowedByLoggedInUser ? "following" : "Follow" }}
+                        {{
+                            viewingProfileOf.isUserFollowedByLoggedInUser === "NOT_FOLLOWING"
+                                ? "FOLLOW"
+                                : viewingProfileOf.isUserFollowedByLoggedInUser
+                        }}
                     </button>
                 </div>
             </div>

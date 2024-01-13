@@ -1,0 +1,24 @@
+<pagewrapper>
+    <!-- <div>Followers</div> -->
+    <div *ngIf="followRequests$ | async as followRequests" class="flex flex-col items-center justify-center mx-auto gap-4">
+        <!-- <user-follow *ngFor="let followRequest of followRequests" [loggedInUser]="user" [searchedUser]="followRequest"></user-follow> -->
+        <div
+            *ngFor="let followRequest of followRequests"
+            class="flex items-center justify-between gap-3 w-72 bg-gray-200 p-5 cursor-pointer"
+        >
+            <div class="flex items-center gap-3 justify-between w-full">
+                <div routerLink="/profile/{{ followRequest.user.userName }}" class="flex items-center gap-3">
+                    <display-picture></display-picture> 
+                    <span>{{ followRequest.user.firstName }}</span>
+                </div>
+                <div *ngIf="loggedInUser.id !== followRequest.user.id">
+                    <button (click)="acceptRequest(followRequest.user.id)"
+                        class="px-4 py-1 rounded-lg following"
+                    >
+                        ACCEPT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</pagewrapper>

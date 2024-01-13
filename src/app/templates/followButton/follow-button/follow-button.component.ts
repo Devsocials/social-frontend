@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Following } from "../../../common/following";
 import { UserService } from "../../../services/user.service";
 import { User } from "../../../common/user";
@@ -10,20 +10,33 @@ import { take } from "rxjs";
     templateUrl: "./follow-button.component.html",
     styleUrl: "./follow-button.component.css",
 })
-export class FollowButtonComponent {
+export class FollowButtonComponent implements OnInit {
     @Input() followingData!: Following;
     @Input() loggedInUser!: User;
 
     constructor(private userService: UserService) {}
+    ngOnInit(): void {
+        // console.log("this.followingData", this.followingData);
+        
+    }
+    
 
     followUser(): void {
-        const followAction: FollowAction = this.followingData.userFollowedByLoggedInUser ? FollowAction.UNFOLLOW : FollowAction.FOLLOW;
+        const followAction: FollowAction = this.followingData.isUserFollowedByLoggedInUser === "FOLLOWING" || this.followingData.isUserFollowedByLoggedInUser === "REQUESTED" ? FollowAction.UNFOLLOW : FollowAction.FOLLOW;
         this.userService
             .followUser(this.loggedInUser, this.followingData.user.id, followAction)
             .pipe(take(1))
             .subscribe({
-                next: () => {
-                    this.followingData.userFollowedByLoggedInUser = !this.followingData.userFollowedByLoggedInUser;
+                next: (data) => {
+                    if (this.followingData.isUserFollowedByLoggedInUser === 'NOT_FOLLOWING' && data.followRequest === 'PENDING') {
+                        this.followingData.isUserFollowedByLoggedInUser = "REQUESTED"
+                    } else if (this.followingData.isUserFollowedByLoggedInUser === "REQUESTED") {
+                        this.followingData.isUserFollowedByLoggedInUser = "NOT_FOLLOWING"
+                    } else if (this.followingData.isUserFollowedByLoggedInUser === "FOLLOWING") {
+                        this.followingData.isUserFollowedByLoggedInUser = "NOT_FOLLOWING"
+                    } else {
+                        this.followingData.isUserFollowedByLoggedInUser = "FOLLOWING"
+                    }
                 },
             });
     }

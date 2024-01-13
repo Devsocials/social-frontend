@@ -16,7 +16,7 @@
                 </li>
                 <li class="flex">
                     <a
-                        routerLink="/profile/{{ loggedInUser?.userName }}"
+                        routerLink="/profile/{{ loggedInUser.userName }}"
                         rel="noopener noreferrer"
                         href="#"
                         class="flex items-center px-4 -mb-1 dark:border-transparent"
@@ -25,7 +25,7 @@
                 </li>
                 <li class="flex">
                     <a
-                        routerLink="/profile/{{ loggedInUser?.userName }}/followers"
+                        routerLink="/profile/{{ loggedInUser.userName }}/followers"
                         rel="noopener noreferrer"
                         href="#"
                         class="flex items-center px-4 -mb-1 dark:border-transparent"
@@ -34,11 +34,20 @@
                 </li>
                 <li class="flex">
                     <a
-                        routerLink="/profile/{{ loggedInUser?.userName }}/following"
+                        routerLink="/profile/{{ loggedInUser.userName }}/following"
                         rel="noopener noreferrer"
                         href="#"
                         class="flex items-center px-4 -mb-1 dark:border-transparent"
                         >Following</a
+                    >
+                </li>
+                <li class="flex">
+                    <a
+                        routerLink="/profile/{{ loggedInUser.userName }}/follow-requests"
+                        rel="noopener noreferrer"
+                        href="#"
+                        class="flex items-center px-4 -mb-1 dark:border-transparent"
+                        >Follow Requests</a
                     >
                 </li>
             </ul>

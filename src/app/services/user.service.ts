@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { User } from "../common/user";
 import { Constants } from "../common/constants";
 import { FollowAction } from "../common/follow-action";
@@ -33,5 +33,16 @@ export class UserService {
 
     getUserByUserName(user: User, userName: any): Observable<User> {
         return this.http.get<User>(Constants.baseUrl + `/user/${user.id}/get-user/${userName}`);
+    }
+
+    getFollowRequests(user: User): Observable<Following[]> {
+        return this.http.get<Following[]>(Constants.baseUrl + `/user/${user.id}/follow-requests`);
+    }
+
+    followRequestAction(user: User, followingId: number): Observable<any> {
+        return this.http.put<any>(Constants.baseUrl + `/user/${user.id}/follow-requests`, {
+            followingId: followingId,
+            request: "ACCEPTED",
+        });
     }
 }

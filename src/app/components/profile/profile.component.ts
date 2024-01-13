@@ -50,13 +50,22 @@ export class ProfileComponent implements OnInit {
     }
 
     followUser(): void {
-        const followAction: FollowAction = this.viewingProfileOf.userFollowedByLoggedInUser ? FollowAction.UNFOLLOW : FollowAction.FOLLOW;
+        const followAction: FollowAction = this.viewingProfileOf.isUserFollowedByLoggedInUser === "FOLLOWING" || this.viewingProfileOf.isUserFollowedByLoggedInUser === "REQUESTED" ? FollowAction.UNFOLLOW : FollowAction.FOLLOW;
         this.userService
             .followUser(this.loggedInUser, this.viewingProfileOf.id, followAction)
             .pipe(take(1))
             .subscribe({
-                next: () => {
-                    this.viewingProfileOf.userFollowedByLoggedInUser = !this.viewingProfileOf.userFollowedByLoggedInUser;
+                next: (data) => {
+                    // this.viewingProfileOf.userFollowedByLoggedInUser = !this.viewingProfileOf.userFollowedByLoggedInUser;
+                    if (this.viewingProfileOf.isUserFollowedByLoggedInUser === 'NOT_FOLLOWING' && data.followRequest === 'PENDING') {
+                        this.viewingProfileOf.isUserFollowedByLoggedInUser = "REQUESTED"
+                    } else if (this.viewingProfileOf.isUserFollowedByLoggedInUser === "REQUESTED") {
+                        this.viewingProfileOf.isUserFollowedByLoggedInUser = "NOT_FOLLOWING"
+                    } else if (this.viewingProfileOf.isUserFollowedByLoggedInUser === "FOLLOWING") {
+                        this.viewingProfileOf.isUserFollowedByLoggedInUser = "NOT_FOLLOWING"
+                    } else {
+                        this.viewingProfileOf.isUserFollowedByLoggedInUser = "FOLLOWING"
+                    }
                 },
             });
     }

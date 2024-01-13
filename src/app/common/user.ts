@@ -4,7 +4,7 @@ export class User {
     lastName!: string;
     email!: string;
     userName!: string;
-    userFollowedByLoggedInUser!: boolean;
+    isUserFollowedByLoggedInUser!: string;
     noOfPosts!: number;
     noOfFollowing!: number;
     noOfFollowers!: number;

@@ -14,14 +14,16 @@ export class LoginComponent implements OnInit {
     constructor(private authService: AuthService) {}
     ngOnInit(): void {
         this.signUpFormGroup = new FormGroup({
+            firstname: new FormControl("", Validators.required),
+            lastname: new FormControl("", Validators.required),
             username: new FormControl("", Validators.required),
             email: new FormControl("", Validators.required),
             password: new FormControl("", Validators.required),
-            confrimPassword: new FormControl("", Validators.required),
+            confirmPassword: new FormControl("", Validators.required),
         });
     }
 
-    signUp: boolean = false;
+    signUp: boolean = true;
 
     stateStyleTrue: string =
         "w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2 border-blue-500 dark:border-blue-400 dark:text-white";
@@ -39,4 +41,6 @@ export class LoginComponent implements OnInit {
         const password = this.signUpFormGroup.controls["password"].value;
         this.authService.login(user, password);
     }
+
+    signup() {}
 }

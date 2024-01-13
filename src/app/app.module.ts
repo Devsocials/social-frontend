@@ -27,6 +27,7 @@ import { FollowingComponent } from './components/following/following.component';
 import { FollowButtonComponent } from './templates/followButton/follow-button/follow-button.component';
 import { DisplayPictureComponent } from './templates/display-picture/display-picture/display-picture.component';
 import { UserFollowComponent } from './templates/user-follow/user-follow/user-follow.component';
+import { FollowRequestsComponent } from './components/follow-requests/follow-requests.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { UserFollowComponent } from './templates/user-follow/user-follow/user-fo
         FollowButtonComponent,
         DisplayPictureComponent,
         UserFollowComponent,
+        FollowRequestsComponent,
     ],
     imports: [
         BrowserModule,
