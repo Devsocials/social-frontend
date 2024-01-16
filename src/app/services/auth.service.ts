@@ -50,17 +50,27 @@ export class AuthService {
             });
     }
 
+    logout(): void {
+        this.cookie.deleteCookie("auth");
+        this.store.dispatch(login({ payload: { loginData: new Auth() } }));
+        this.router.navigate([`/login`]);
+    }
+
     validateLogin(): Observable<User> {
         return this.http.get<User>(Constants.baseUrl + `/user/0/get-loggedin-user`);
     }
 
-    signup(user: User, password: string): void {
-        const cred: any = {
-            email: user.email,
-            password: password,
-        };
+    userNameCheck(username: string): Observable<boolean> {
+        return this.http.get<boolean>(Constants.baseUrl + `/user/0/check-username/${username}`);
+    }
+
+    emailCheck(email: string): Observable<boolean> {
+        return this.http.get<boolean>(Constants.baseUrl + `/user/0/check-email/${email}`);
+    }
+
+    signup(user: User): void {
         this.http
-            .post(Constants.baseUrl + "/user/0/token", cred, {
+            .post(Constants.baseUrl + "/user/0/register", user, {
                 observe: "response",
             })
             .subscribe({

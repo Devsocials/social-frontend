@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { User } from "../../common/user";
 import { UserService } from "../../services/user.service";
 import { Following } from "../../common/following";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
     selector: "app-navbar",
@@ -17,7 +18,7 @@ export class NavbarComponent implements OnInit {
     isUserLoggedIn: boolean = false;
     loggedInUser!: User;
     searchedUserList$?: Observable<Following[]>;
-    constructor(private store: Store<{ auth: Auth }>, private userService: UserService) {
+    constructor(private store: Store<{ auth: Auth }>, private userService: UserService, private authService: AuthService) {
         this.auth$ = store.select("auth");
     }
 
@@ -32,5 +33,10 @@ export class NavbarComponent implements OnInit {
 
     onSearch(userName: string) {
         this.searchedUserList$ = this.userService.searchUsersByName(this.loggedInUser, userName);
+    }
+
+    logout() {
+        this.isUserLoggedIn = false;
+        this.authService.logout();
     }
 }

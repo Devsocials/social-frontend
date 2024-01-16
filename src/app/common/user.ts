@@ -8,4 +8,7 @@ export class User {
     noOfPosts!: number;
     noOfFollowing!: number;
     noOfFollowers!: number;
+    password?: string;
+    age?: number;
+    dateOfBirth?: Date;
 }

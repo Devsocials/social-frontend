@@ -13,9 +13,9 @@ export class HttpInterceptorService implements HttpInterceptor {
         return from(this.handleAccess(request, next));
     }
     private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
-        const openEndpoints = ["http://localhost:9001/user/0/token"];
+        const openEndpoints = ["http://localhost:9001/user/0/token", "http://localhost:9001/user/0/check", "http://localhost:9001/user/0/register"];
         const accessToken = this.cookie.getCookie("auth");
-        if (!openEndpoints.some((url) => request.urlWithParams.includes(url))) {
+        if (!openEndpoints.some((url) => request.urlWithParams.startsWith(url))) {
             request = request.clone({
                 setParams: {
                     Authorization: "Bearer " + accessToken,

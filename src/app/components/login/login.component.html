@@ -5,7 +5,7 @@
 
 <section class="bg-white dark:bg-gray-900">
     <div formData class="container flex items-center justify-center min-h-screen px-6 mx-auto">
-        <form [formGroup]="signUpFormGroup" class="w-full max-w-md" (ngSubmit)="login()">
+        <form [formGroup]="signUp ? signUpFormGroup : loginFormGroup" class="w-full max-w-md" (ngSubmit)="signUp ? signup() : login()">
             <!-- <div class="flex justify-center mx-auto">
                 <img class="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="" />
             </div> -->
@@ -39,11 +39,12 @@
                 </span>
 
                 <input
-                    formControlName="username"
+                    formControlName="userName"
                     type="text"
                     class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     placeholder="Username"
                 />
+                <message *ngIf="!userNameAvailable" [type]="'danger'" [message]="'User name already taken'"></message>
             </div>
 
             <div *ngIf="signUp" class="relative flex items-center mt-8">
@@ -65,7 +66,7 @@
                 </span>
 
                 <input
-                    formControlName="firstname"
+                    formControlName="firstName"
                     type="text"
                     class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     placeholder="First name"
@@ -91,7 +92,7 @@
                 </span>
 
                 <input
-                    formControlName="lastname"
+                    formControlName="lastName"
                     type="text"
                     class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     placeholder="Last name"
@@ -122,7 +123,7 @@
                 <input id="dropzone-file" type="file" class="hidden" />
             </label> -->
 
-            <div class="relative flex items-center mt-6">
+            <div class="relative flex items-center mt-8">
                 <span class="absolute">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -146,10 +147,10 @@
                     class="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     placeholder="Email address"
                 />
-                <!-- <span class="absolute top-12 left-10 text-xs">HEYY</span> -->
+                <message *ngIf="!emailAvailable" [type]="'danger'" [message]="'Email already registered'"></message>
             </div>
 
-            <div class="relative flex items-center mt-4">
+            <div class="relative flex items-center mt-8">
                 <span class="absolute">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -175,7 +176,7 @@
                 />
             </div>
 
-            <div *ngIf="signUp" class="relative flex items-center mt-4">
+            <div *ngIf="signUp" class="relative flex items-center mt-8">
                 <span class="absolute">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -199,12 +200,14 @@
                     class="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     placeholder="Confirm Password"
                 />
+                <message *ngIf="signUpFormGroup.controls['confirmPassword'].hasError('differentPasswords')" [type]="'danger'" [message]="'Password does not match'"></message>
             </div>
 
-            <div class="mt-6">
+            <div class="mt-8">
                 <button
+                    [disabled]="signUp ? signUpFormGroup.invalid : loginFormGroup.invalid"
                     type="submit"
-                    class="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                    class="disabled:bg-blue-100 disabled:cursor-not-allowed w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                 >
                     Sign Up
                 </button>

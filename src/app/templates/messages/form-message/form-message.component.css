@@ -1,0 +1,15 @@
+.danger {
+    color: red;
+}
+
+.success {
+    color: rgb(32, 197, 51);
+}
+
+.info {
+    color: rgb(114, 114, 114);
+}
+
+.warning {
+    color: rgb(227, 220, 35);
+}
