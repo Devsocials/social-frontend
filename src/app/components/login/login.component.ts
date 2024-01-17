@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
         });
 
         this.loginFormGroup = new FormGroup({
-            email: new FormControl("", []),
-            password: new FormControl("", [])
+            email: new FormControl("", [Validators.required]),
+            password: new FormControl("", [Validators.required])
         });
     }
 
@@ -54,12 +54,6 @@ export class LoginComponent implements OnInit {
 
     signup() {
         this.authService.signup(this.signUpFormGroup.value);
-    }
-
-    emailCheck(): void {
-        this.authService.emailCheck(this.signUpFormGroup.controls["email"].value).subscribe({
-            next: (data) => (this.emailAvailable = data),
-        });
     }
 
     usernameValidator(): AsyncValidatorFn {

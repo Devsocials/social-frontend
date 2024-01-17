@@ -6,6 +6,9 @@
         <div>
             <p routerLink="/{{ postDetails.user.userName }}">{{ postDetails.user.firstName }} {{ postDetails.user.lastName }}</p>
         </div>
+        <div class="ml-auto order-2 cursor-pointer">
+            <ng-icon [color]="'gray'" size="22" name="faSolidEllipsisVertical"></ng-icon>
+        </div>
     </div>
     <div>
         <img class="w-full" src="{{ postDetails.postUrl }}" />

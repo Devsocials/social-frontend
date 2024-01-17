@@ -1,1 +1,5 @@
-<p style="position: absolute; bottom: 20px; left: 20px;" [@toastTrigger]="(toast.showToast$ | async) ? 'open' : 'close'" [class]="toast.toastState$ | async">toast works!</p>
+<div class="container-div" [@toastTrigger]="(toast.showToast$ | async) ? 'open' : 'close'">
+    <div class="msg-div" [class]="toast.toastState$ | async">
+        <p class="toast-msg">{{toast.toastMessage$ | async}}</p>
+    </div>
+</div>

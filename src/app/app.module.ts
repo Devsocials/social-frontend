@@ -21,7 +21,7 @@ import { UserPostComponent } from "./templates/user-pot/user-post/user-post.comp
 import { PagewrapperComponent } from "./templates/wrappers/pagewrapper/pagewrapper.component";
 import { NgIconsModule } from "@ng-icons/core";
 import { faHeart, faComment } from "@ng-icons/font-awesome/regular";
-import { faSolidHeart } from "@ng-icons/font-awesome/solid";
+import { faSolidHeart, faSolidEllipsisVertical } from "@ng-icons/font-awesome/solid";
 import { FollowersComponent } from './components/followers/followers.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowButtonComponent } from './templates/followButton/follow-button/follow-button.component';
@@ -58,7 +58,7 @@ import { FormMessageComponent } from './templates/messages/form-message/form-mes
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        NgIconsModule.withIcons({ faHeart, faSolidHeart, faComment }),
+        NgIconsModule.withIcons({ faHeart, faSolidHeart, faComment, faSolidEllipsisVertical }),
     ],
     providers: [
         {

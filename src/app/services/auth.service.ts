@@ -8,6 +8,7 @@ import { Constants } from "../common/constants";
 import { CookieManagerService } from "./cookie-manager.service";
 import { login } from "../store/actions/auth.action";
 import { Router } from "@angular/router";
+import { ToastService } from "./toast/toast.service";
 
 @Injectable({
     providedIn: "root",
@@ -20,6 +21,7 @@ export class AuthService {
         private http: HttpClient,
         private cookie: CookieManagerService,
         private router: Router,
+        private toast: ToastService
     ) {
         this.auth$ = store.select("auth");
     }
@@ -37,15 +39,16 @@ export class AuthService {
                 next: (data: any) => {
                     const auth = new Auth();
                     auth.isUserAuthenticated = true;
-                    auth.user = data.body.user;
+                    auth.user = data?.body?.user;
                     this.store.dispatch(login({ payload: { loginData: auth } }));
-                    if (data.body?.token) {
-                        this.cookie.setCookie("auth", data?.body.token, 7);
+                    this.toast.showToast(this.toast.TOAST_STATE.success, data?.body?.message ? data.body.message : "Login successfull", 3000);
+                    if (data?.body?.token) {
+                        this.cookie.setCookie("auth", data.body.token, 7);
                     }
                     this.router.navigate([`/${auth.user.userName}`]);
                 },
-                error: () => {
-                    this.store.dispatch(login({ payload: { loginData: new Auth() } }));
+                error: (data: any) => {
+                    this.toast.showToast(this.toast.TOAST_STATE.danger, data?.error?.message ? data.error.message : "Login failed", 3000);
                 },
             });
     }
@@ -79,12 +82,14 @@ export class AuthService {
                     auth.isUserAuthenticated = true;
                     auth.user = data.body.user;
                     this.store.dispatch(login({ payload: { loginData: auth } }));
+                    this.toast.showToast(this.toast.TOAST_STATE.success, "Registered successfully", 3000);
                     if (data.body?.token) {
                         this.cookie.setCookie("auth", data?.body.token, 7);
                     }
                     this.router.navigate([`/${auth.user.userName}`]);
                 },
                 error: () => {
+                    this.toast.showToast(this.toast.TOAST_STATE.success, "Registeration failed", 3000);
                     this.store.dispatch(login({ payload: { loginData: new Auth() } }));
                 },
             });

@@ -9,6 +9,7 @@ export class ToastService {
         success: "success-toast",
         warning: "warning-toast",
         danger: "danger-toast",
+        info: "info-toast",
     };
 
     public showToast$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -35,4 +36,5 @@ interface ToastState {
     success: string;
     warning: string;
     danger: string;
+    info: string;
 }
