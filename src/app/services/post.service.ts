@@ -21,7 +21,7 @@ export class PostService {
     }
 
     getCommentsByPostId(user: User, postId: number): Observable<Comment[]> {
-        return this.http.get<Comment[]>(Constants.baseUrl + `/user/${user.id}/post/${postId}/allcomments`);
+        return this.http.get<Comment[]>(Constants.baseUrl + `/user/${user.id}/post/${postId}/post-comments`);
     }
 
     addComment(user: User, postId: number, comment: Comment): Observable<any> {
@@ -30,5 +30,12 @@ export class PostService {
 
     likePost(user: User, postId: number, action: string): Observable<any> {
         return this.http.post<any>(Constants.baseUrl + `/user/${user.id}/post/${postId}/like`, { action: action });
+    }
+
+    editPost(post: Post): void {
+        this.http.put<any>(Constants.baseUrl + `/user/${post.user.id}/post/`, post).subscribe({
+            next: (data) => {
+            },
+        });
     }
 }

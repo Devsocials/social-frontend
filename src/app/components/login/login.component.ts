@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    signUp: boolean = true;
+    signUp: boolean = false;
 
     stateStyleTrue: string =
         "w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2 border-blue-500 dark:border-blue-400 dark:text-white";

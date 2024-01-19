@@ -20,8 +20,8 @@ import { ProfileComponent } from "./components/profile/profile.component";
 import { UserPostComponent } from "./templates/user-pot/user-post/user-post.component";
 import { PagewrapperComponent } from "./templates/wrappers/pagewrapper/pagewrapper.component";
 import { NgIconsModule } from "@ng-icons/core";
-import { faHeart, faComment } from "@ng-icons/font-awesome/regular";
-import { faSolidHeart, faSolidEllipsisVertical } from "@ng-icons/font-awesome/solid";
+import { faHeart, faComment, faPenToSquare } from "@ng-icons/font-awesome/regular";
+import { faSolidHeart, faSolidEllipsisVertical, faSolidXmark } from "@ng-icons/font-awesome/solid";
 import { FollowersComponent } from './components/followers/followers.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowButtonComponent } from './templates/followButton/follow-button/follow-button.component';
@@ -29,6 +29,8 @@ import { DisplayPictureComponent } from './templates/display-picture/display-pic
 import { UserFollowComponent } from './templates/user-follow/user-follow/user-follow.component';
 import { FollowRequestsComponent } from './components/follow-requests/follow-requests.component';
 import { FormMessageComponent } from './templates/messages/form-message/form-message.component';
+import { UsernameComponent } from './templates/username/username.component';
+import { ModalComponent } from './templates/modal/modal.component';
 
 @NgModule({
     declarations: [
@@ -48,6 +50,8 @@ import { FormMessageComponent } from './templates/messages/form-message/form-mes
         UserFollowComponent,
         FollowRequestsComponent,
         FormMessageComponent,
+        UsernameComponent,
+        ModalComponent,
     ],
     imports: [
         BrowserModule,
@@ -58,7 +62,7 @@ import { FormMessageComponent } from './templates/messages/form-message/form-mes
         BrowserAnimationsModule,
         FormsModule,
         ReactiveFormsModule,
-        NgIconsModule.withIcons({ faHeart, faSolidHeart, faComment, faSolidEllipsisVertical }),
+        NgIconsModule.withIcons({ faHeart, faSolidHeart, faComment, faSolidEllipsisVertical, faPenToSquare, faSolidXmark }),
     ],
     providers: [
         {

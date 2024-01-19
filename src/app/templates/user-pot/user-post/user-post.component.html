@@ -3,11 +3,13 @@
         <div class="rounded-full overflow-hidden w-10 h-10">
             <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
         </div>
-        <div>
-            <p routerLink="/{{ postDetails.user.userName }}">{{ postDetails.user.firstName }} {{ postDetails.user.lastName }}</p>
+        <div routerLink="/profile/{{ postDetails.user.userName }}" class="cursor-pointer">
+            <p>{{ postDetails.user.firstName }} {{ postDetails.user.lastName }}</p>
+            <span *ngIf="postDetails.location" class="text-sm -mt-1">{{ postDetails.location }}</span>
         </div>
-        <div class="ml-auto order-2 cursor-pointer">
-            <ng-icon [color]="'gray'" size="22" name="faSolidEllipsisVertical"></ng-icon>
+        <div *ngIf="postDetails.user.id === user.id" class="ml-auto order-2 flex items-center gap-3">
+            <ng-icon (click)="editPost()" class="cursor-pointer" [color]="'gray'" size="22" name="faPenToSquare"></ng-icon>
+            <ng-icon class="cursor-pointer" [color]="'gray'" size="22" name="faSolidEllipsisVertical"></ng-icon>
         </div>
     </div>
     <div>
@@ -19,39 +21,72 @@
                 <ng-icon *ngIf="!postDetails.likedByUser" size="22" name="faHeart"></ng-icon>
                 <ng-icon *ngIf="postDetails.likedByUser" size="22" [color]="'red'" name="faSolidHeart"></ng-icon>
             </span>
-            <span class="-mt-2">
-                <p>{{ postDetails.noOfLikes }}</p>
-            </span>
         </div>
         <div class="flex flex-col w-fit h-fit items-center">
             <span (click)="getComments()" class="cursor-pointer">
                 <ng-icon size="22" name="faComment"></ng-icon>
             </span>
-            <span class="-mt-2">
-                <p>{{ postDetails.noOfComments }}</p>
-            </span>
         </div>
+    </div>
+    <div class="-mt-2 text-sm text-gray-800">
+        <p>
+            Liked by <span class="font-medium">{{ postDetails.noOfLikes }}</span>
+        </p>
+    </div>
+    <div class="flex items-center gap-2">
+        <username [userName]="postDetails.user.userName"></username>
+        <p *ngIf="postDetails.caption">{{ postDetails.caption }}</p>
+    </div>
+    <div (click)="getComments()" class="hover:underline cursor-pointer text-sm text-gray-800">
+        <p>
+            {{ commentsHidden ? "View all" : "Hide" }} <span class="font-medium">{{ postDetails.noOfComments }}</span> comments
+        </p>
     </div>
     <div *ngIf="!commentsHidden" class="mt-2 ml-8">
         <div *ngIf="comments$ | async as comments">
-            <div *ngFor="let comment of comments" class="flex items-center gap-2 mb-6">
-                <div class="rounded-full overflow-hidden w-10 h-10">
-                    <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+            <div *ngFor="let comment of comments">
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="rounded-full overflow-hidden w-10 h-10">
+                        <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+                    </div>
+                    <div class="text-sm">
+                        <p class="font-medium">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
+                        <div class="flex items-center gap-3">
+                            <p>{{ comment.comment }}</p>
+                            <span (click)="onReply(comment)" class="font-medium text-xs hover:underline cursor-pointer">Reply</span>
+                            <span class="font-medium text-xs hover:underline cursor-pointer">View replies</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-sm">
-                    <p class="font-medium">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
-                    <p>{{ comment.comment }}</p>
+                <div class="flex items-center gap-2 mb-6 ml-12">
+                    <div class="rounded-full overflow-hidden w-10 h-10">
+                        <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+                    </div>
+                    <div class="text-sm">
+                        <p class="font-medium">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
+                        <div class="flex items-center gap-3">
+                            <p>{{ comment.comment }}</p>
+                            <span (click)="onReply(comment)" class="font-medium text-xs hover:underline cursor-pointer">Reply</span>
+                            <span class="font-medium text-xs hover:underline cursor-pointer">View replies</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="mt-8">
             <form #commentForm="ngForm" (ngSubmit)="addComment(commentForm)">
-                <input
-                    class="bg-transparent border-b-2 focus:outline-none border-gray-300"
-                    name="comment"
-                    ngModel
-                    placeholder="Add a comment"
-                />
+                <div class="w-56">
+                    <div *ngIf="replying?.comment" class="px-2 flex items-center justify-between w-full h-6 bg-gray-300 mb-2 text-xs">
+                        <span>Replying to {{ replying?.user?.userName }}</span>
+                        <span class="cursor-pointer" (click)="cancelReply()"><ng-icon size="18" name="faSolidXmark"></ng-icon></span>
+                    </div>
+                    <input
+                        class="bg-transparent border-b-2 focus:outline-none border-gray-300"
+                        name="comment"
+                        ngModel
+                        placeholder="Add a comment"
+                    />
+                </div>
                 <button class="ml-3" type="submit">Add</button>
             </form>
         </div>

@@ -41,7 +41,27 @@
             </div>
         </div>
         <div *ngIf="posts$ | async as posts">
-            <app-user-post *ngFor="let post of posts" [postDetails]="post" [user]="loggedInUser"></app-user-post>
+            <app-user-post
+                (editPostEvent)="editPostModalSettings($event)"
+                *ngFor="let post of posts"
+                [postDetails]="post"
+                [user]="loggedInUser"
+            ></app-user-post>
         </div>
     </section>
 </pagewrapper>
+
+<app-modal [(openModal)]="editPostModal" (onModalConfirm)="saveEdittedPost()">
+    <div class="bg-red-200 w-full h-full">
+        <form [formGroup]="editPostForm">
+            <div class="flex flex-col items-start gap-4">
+                <div>
+                    <input formControlName="caption" type="text" placeholder="caption" />
+                </div>
+                <div>
+                    <input formControlName="location" type="text" placeholder="location" />
+                </div>
+            </div>
+        </form>
+    </div>
+</app-modal>

@@ -1,0 +1,25 @@
+<div
+    *ngIf="openModal"
+    class="shadow-xl fixed h-full w-full lg:h-[50%] lg:w-[60%] top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 bg-gray-200"
+>
+    <section class="bg-gray-100 h-10 w-full">
+        <div class="bg-gray-300 h-full w-fit float-right">
+            <button (click)="closeModalFunc()" class="cursor-pointer hover:bg-red-500 bg-gray-300 h-full w-10 transition-all duration-300">
+                <ng-icon size="22" name="faSolidXmark"></ng-icon>
+            </button>
+        </div>
+    </section>
+    <ng-content></ng-content>
+    <section class="bg-gray-100 h-12 p-2 w-full flex justify-end gap-4">
+        <div class="bg-gray-300 h-full w-fit">
+            <button (click)="closeModalFunc()" class="cursor-pointer hover:bg-red-500 bg-gray-300 h-full px-4 transition-all duration-300">
+                Cancel
+            </button>
+        </div>
+        <div class="bg-gray-300 h-full w-fit">
+            <button (click)="onConfirm()" class="cursor-pointer hover:bg-red-500 bg-gray-300 h-full px-4 transition-all duration-300">
+                Confirm
+            </button>
+        </div>
+    </section>
+</div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Post } from "../../../common/post";
 import { BehaviorSubject } from "rxjs";
 import { User } from "../../../common/user";
@@ -14,8 +14,10 @@ import { NgForm } from "@angular/forms";
 export class UserPostComponent implements OnInit {
     @Input() user!: User;
     @Input() postDetails!: Post;
+    @Output() editPostEvent = new EventEmitter<Post>();
     comments$: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>([]);
     commentsHidden: boolean = true;
+    replying: Comment | null = null;
 
     constructor(private postService: PostService) {}
 
@@ -37,6 +39,9 @@ export class UserPostComponent implements OnInit {
         const newComment = new Comment();
         newComment.comment = commentForm.controls["comment"].value;
         newComment.user = this.user;
+        if(this.replying) {
+            newComment.nestedCommentId = this.replying.id;
+        }
         this.postService.addComment(this.user, this.postDetails.id, newComment).subscribe({
             next: () => {
                 const newComments: Comment[] = this.comments$.value;
@@ -60,5 +65,17 @@ export class UserPostComponent implements OnInit {
                 this.postDetails.likedByUser = !this.postDetails.likedByUser;
             },
         });
+    }
+
+    editPost() {
+        this.editPostEvent.emit(this.postDetails);
+    }
+
+    onReply(reply: Comment) {
+        this.replying = reply;
+    }
+
+    cancelReply() {
+        this.replying = null;
     }
 }
