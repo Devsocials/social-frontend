@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { Post } from "../../../common/post";
 import { BehaviorSubject } from "rxjs";
 import { User } from "../../../common/user";
 import { Comment } from "../../../common/comment";
 import { PostService } from "../../../services/post.service";
 import { NgForm } from "@angular/forms";
+import { CommentComponent } from "../comment/comment.component";
 
 @Component({
     selector: "app-user-post",
@@ -21,7 +22,9 @@ export class UserPostComponent implements OnInit {
 
     constructor(private postService: PostService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        
+    }
 
     getComments() {
         this.commentsHidden = !this.commentsHidden;
@@ -29,9 +32,11 @@ export class UserPostComponent implements OnInit {
             this.postService.getCommentsByPostId(this.user, this.postDetails.id).subscribe({
                 next: (data) => {
                     this.postDetails.noOfComments = data.length;
-                    this.comments$.next(data);
+                    this.comments$.next(data);  
                 },
             });
+        } else {
+            this.replying = null;
         }
     }
 
@@ -39,15 +44,17 @@ export class UserPostComponent implements OnInit {
         const newComment = new Comment();
         newComment.comment = commentForm.controls["comment"].value;
         newComment.user = this.user;
-        if(this.replying) {
+        if (this.replying) {
             newComment.nestedCommentId = this.replying.id;
         }
         this.postService.addComment(this.user, this.postDetails.id, newComment).subscribe({
             next: () => {
-                const newComments: Comment[] = this.comments$.value;
-                newComments.push(newComment);
-                this.comments$.next(newComments);
-                this.postDetails.noOfComments++;
+                if (!newComment.nestedCommentId) {
+                    const newComments: Comment[] = this.comments$.value;
+                    newComments.push(newComment);
+                    this.comments$.next(newComments);
+                    this.postDetails.noOfComments++;
+                }
                 commentForm.resetForm();
             },
         });

@@ -1,0 +1,33 @@
+<div>
+    <div class="flex items-center gap-2 mb-6">
+        <div class="rounded-full overflow-hidden w-10 h-10">
+            <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+        </div>
+        <div class="text-sm">
+            <p class="font-medium">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
+            <div class="flex items-center gap-3">
+                <p>{{ comment.comment }}</p>
+                <span (click)="onReplyClick()" class="font-medium text-xs hover:underline cursor-pointer">Reply</span>
+                <span (click)="getCommentReplies()" class="font-medium text-xs hover:underline cursor-pointer"
+                    >{{ viewReplies ? "Hide" : "View" }} replies</span
+                >
+            </div>
+        </div>
+    </div>
+    <section *ngIf="viewReplies">
+        <div *ngIf="commentReplies$ | async as commentReplies" class="flex flex-col gap-2 mb-6 ml-12">
+            <div *ngFor="let commentReply of commentReplies" class="flex items-center gap-2">
+                <div class="rounded-full overflow-hidden w-10 h-10">
+                    <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
+                </div>
+                <div class="text-sm">
+                    <p class="font-medium">{{ commentReply.user.firstName }} {{ commentReply.user.lastName }}</p>
+                    <div class="flex items-center gap-3">
+                        <p>{{ commentReply.comment }}</p>
+                        <!-- <span (click)="onReplyClick()" class="font-medium text-xs hover:underline cursor-pointer">Reply</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

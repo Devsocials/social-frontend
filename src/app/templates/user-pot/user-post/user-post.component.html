@@ -44,34 +44,7 @@
     </div>
     <div *ngIf="!commentsHidden" class="mt-2 ml-8">
         <div *ngIf="comments$ | async as comments">
-            <div *ngFor="let comment of comments">
-                <div class="flex items-center gap-2 mb-6">
-                    <div class="rounded-full overflow-hidden w-10 h-10">
-                        <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
-                    </div>
-                    <div class="text-sm">
-                        <p class="font-medium">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
-                        <div class="flex items-center gap-3">
-                            <p>{{ comment.comment }}</p>
-                            <span (click)="onReply(comment)" class="font-medium text-xs hover:underline cursor-pointer">Reply</span>
-                            <span class="font-medium text-xs hover:underline cursor-pointer">View replies</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 mb-6 ml-12">
-                    <div class="rounded-full overflow-hidden w-10 h-10">
-                        <img src="https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg" />
-                    </div>
-                    <div class="text-sm">
-                        <p class="font-medium">{{ comment.user.firstName }} {{ comment.user.lastName }}</p>
-                        <div class="flex items-center gap-3">
-                            <p>{{ comment.comment }}</p>
-                            <span (click)="onReply(comment)" class="font-medium text-xs hover:underline cursor-pointer">Reply</span>
-                            <span class="font-medium text-xs hover:underline cursor-pointer">View replies</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <post-comment #postComment (onReply)="onReply($event)" *ngFor="let comment of comments" [comment]="comment" [loggedInUser]="user"></post-comment>
         </div>
         <div class="mt-8">
             <form #commentForm="ngForm" (ngSubmit)="addComment(commentForm)">

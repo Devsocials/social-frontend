@@ -38,4 +38,8 @@ export class PostService {
             },
         });
     }
+
+    getCommentReplies(user: User, postId: number, comment: Comment): Observable<Comment[]> {
+        return this.http.get<Comment[]>(Constants.baseUrl + `/user/${user.id}/post/${postId}/nested-comments/${comment.id}`);
+    } 
 }

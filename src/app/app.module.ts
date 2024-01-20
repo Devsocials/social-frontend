@@ -31,6 +31,7 @@ import { FollowRequestsComponent } from './components/follow-requests/follow-req
 import { FormMessageComponent } from './templates/messages/form-message/form-message.component';
 import { UsernameComponent } from './templates/username/username.component';
 import { ModalComponent } from './templates/modal/modal.component';
+import { CommentComponent } from './templates/user-pot/comment/comment.component';
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import { ModalComponent } from './templates/modal/modal.component';
         FormMessageComponent,
         UsernameComponent,
         ModalComponent,
+        CommentComponent,
     ],
     imports: [
         BrowserModule,
